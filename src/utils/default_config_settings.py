@@ -3,6 +3,13 @@ import pickle
 import uuid
 import gradio as gr
 
+my_task = 'search_job'
+
+if my_task == 'search_job':
+    from src.utils.log_info import my_default_prompt, my_add_infos
+else:
+    from src.utils.my_info import my_default_prompt, my_add_infos
+
 
 def default_config():
     """Prepare the default configuration"""
@@ -12,14 +19,15 @@ def default_config():
         "max_actions_per_step": 10,
         "use_vision": True,
         "tool_calling_method": "auto",
-        "llm_provider": "openai",
-        "llm_model_name": "gpt-4o",
+        "llm_provider": "google",
+        "llm_model_name": "gemini-2.0-flash",
         "llm_num_ctx": 32000,
-        "llm_temperature": 0.6,
+        "llm_temperature": 1.0,
         "llm_base_url": "",
         "llm_api_key": "",
-        "use_own_browser": os.getenv("CHROME_PERSISTENT_SESSION", "false").lower() == "true",
-        "keep_browser_open": False,
+        "use_own_browser": True,
+        "keep_browser_open": True,
+        "add_infos": my_add_infos,
         "headless": False,
         "disable_security": True,
         "enable_recording": True,
@@ -28,7 +36,7 @@ def default_config():
         "save_recording_path": "./tmp/record_videos",
         "save_trace_path": "./tmp/traces",
         "save_agent_history_path": "./tmp/agent_history",
-        "task": "go to google.com and type 'OpenAI' click search and give me the first url",
+        "task": my_default_prompt,
     }
 
 
